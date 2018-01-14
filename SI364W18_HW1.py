@@ -21,18 +21,24 @@ app.debug = True
 def hello_to_you():
     return 'Hello!'
 
+#Question 1
 @app.route('/class')
 def welcome():
 	return 'Welcome to SI 364!'
 
+#Question 2
 @app.route('/movie/<movie_name>')
 def get_movie_data(movie_name):
 	baseurl = "https://itunes.apple.com/search"
-	params = {}
-	resp = requests.get(baseurl, params=params)
+	params_diction = {}
+	params_diction["term"] = movie_name
+	params_diction["media"] = "movie"
+	resp = requests.get(baseurl, params=params_diction)
 	text = resp.text
-	json_obj = json.loads(text)
-	
+	return text
+
+#Question 3
+@app.route('/question')
 
 
 
