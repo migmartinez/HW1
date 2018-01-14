@@ -11,7 +11,7 @@
 ## [PROBLEM 1] - 150 points
 ## Below is code for one of the simplest possible Flask applications. Edit the code so that once you run this application locally and go to the URL 'http://localhost:5000/class', you see a page that says "Welcome to SI 364!"
 
-from flask import Flask
+from flask import Flask, render_template, request
 import requests
 import json
 app = Flask(__name__)
@@ -38,9 +38,27 @@ def get_movie_data(movie_name):
 	return text
 
 #Question 3
-@app.route('/question')
+@app.route('/question',methods = ['POST', 'GET'])
+def question():
+	s = """<!DOCTYPE html>
+	<html>
+	<body>
+	<form method="POST" action = "http://localhost:5000/result">
+	Enter your favorite number:<br>
+	<input type="text" name="fav_number" value="">
+	<br>
+	<input type="submit" value="Submit">
+	</form>
+	</body>
+	</html>"""
+	return s
 
-
+@app.route('/result', methods = ['POST', 'GET'])
+def displayData():
+	if request.method == 'POST':
+		fav_number = request.form['fav_number']
+		fav_number = int(fav_number) * 2
+		return "Double your favorite number is {}".format(fav_number)
 
 if __name__ == '__main__':
     app.run()
