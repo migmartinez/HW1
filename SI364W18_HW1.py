@@ -1,7 +1,7 @@
 ## HW 1
 ## SI 364 W18
 ## 1000 points
-
+## MIGUEL MARTINEZ
 #################################
 
 ## List below here, in a comment/comments, the people you worked with on this assignment AND any resources you used to find code (50 point deduction for not doing so). If none, write "None".
@@ -12,12 +12,28 @@
 ## Below is code for one of the simplest possible Flask applications. Edit the code so that once you run this application locally and go to the URL 'http://localhost:5000/class', you see a page that says "Welcome to SI 364!"
 
 from flask import Flask
+import requests
+import json
 app = Flask(__name__)
 app.debug = True
 
 @app.route('/')
 def hello_to_you():
     return 'Hello!'
+
+@app.route('/class')
+def welcome():
+	return 'Welcome to SI 364!'
+
+@app.route('/movie/<movie_name>')
+def get_movie_data(movie_name):
+	baseurl = "https://itunes.apple.com/search"
+	params = {}
+	resp = requests.get(baseurl, params=params)
+	text = resp.text
+	json_obj = json.loads(text)
+	
+
 
 
 if __name__ == '__main__':
